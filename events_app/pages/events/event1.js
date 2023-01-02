@@ -5,3 +5,5 @@ const EventOne = () => {
 } 
 
 export default EventOne;
+
+// /events/[eventsPerCity]/[event]

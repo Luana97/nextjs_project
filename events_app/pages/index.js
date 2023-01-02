@@ -4,7 +4,15 @@ import styles from "../styles/Home.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+//run on the server only and before our component
+export function getServerSideProps() {
+  return {
+    props: {
+      title: "Heeello",
+    },
+  };
+}
+export default function Home({ title }) {
   return (
     <>
       <Head>
@@ -24,7 +32,7 @@ export default function Home() {
       </header>
 
       <main className={styles.main}>
-        <a href="">
+        <a href="/events/london">
           <img />
           <h2>Events in London</h2>
           <p>
@@ -33,7 +41,7 @@ export default function Home() {
             bibendum lorem nec, scelerisque dui.
           </p>
         </a>
-        <a href="">
+        <a href="/events/sanfrancisco">
           <img />
           <h2>Events in San Francisco</h2>
           <p>
@@ -42,7 +50,7 @@ export default function Home() {
             bibendum lorem nec, scelerisque dui.
           </p>
         </a>
-        <a href="">
+        <a href="/events/barcellona">
           <img />
           <h2>Events in Barcellona</h2>
           <p>
