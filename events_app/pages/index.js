@@ -1,7 +1,8 @@
-import Image from 'next/image'
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import Link from 'next/link';
+import Link from "next/link";
+import { Footer } from "../src/components/footer/Footer";
+import { Header } from "../src/components/header/Header";
+import { Homepage } from "../src/components/homepage/home-page";
 
 //run on the server only and before our component
 export async function getServerSideProps() {
@@ -24,27 +25,7 @@ export default function Home({ data }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header>
-        <nav>
-          <img />
-          <Link href="/">Home</Link>
-          <Link href="/events">Events</Link>
-          <Link href="/about-us">About Us</Link>
-        </nav>
-      </header>
-
-      <main className={styles.main}>
-        {data.map((ev) => (
-          <Link key={ev.id} href={`/events/${ev.id}`}>
-            <Image width={300} height={300} alt={ev.title} src={ev.image} />
-            <h2>{ev.title}</h2>
-            <p>{ev.description}</p>
-          </Link>
-        ))}
-      </main>
-      <footer>
-        <p> 2022 Time to code - A project Next.js</p>
-      </footer>
+      <Homepage data={data} />
     </>
   );
 }
