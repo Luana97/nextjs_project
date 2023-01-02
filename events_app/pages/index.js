@@ -1,18 +1,20 @@
-import { Inter } from "@next/font/google";
+import Image from 'next/image'
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import Link from 'next/link';
 
 //run on the server only and before our component
-export function getServerSideProps() {
+export async function getServerSideProps() {
+  const { events_categories } = await import("/data/data.json");
+
   return {
     props: {
-      title: "Heeello",
+      data: events_categories,
     },
   };
 }
-export default function Home({ title }) {
+
+export default function Home({ data }) {
   return (
     <>
       <Head>
@@ -25,40 +27,20 @@ export default function Home({ title }) {
       <header>
         <nav>
           <img />
-          <a href="/">Home</a>
-          <a href="/events">Events</a>
-          <a href="/about-us">About Us</a>
+          <Link href="/">Home</Link>
+          <Link href="/events">Events</Link>
+          <Link href="/about-us">About Us</Link>
         </nav>
       </header>
 
       <main className={styles.main}>
-        <a href="/events/london">
-          <img />
-          <h2>Events in London</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            egestas imperdiet elit ac tempor. Phasellus nec dolor porttitor,
-            bibendum lorem nec, scelerisque dui.
-          </p>
-        </a>
-        <a href="/events/sanfrancisco">
-          <img />
-          <h2>Events in San Francisco</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            egestas imperdiet elit ac tempor. Phasellus nec dolor porttitor,
-            bibendum lorem nec, scelerisque dui.
-          </p>
-        </a>
-        <a href="/events/barcellona">
-          <img />
-          <h2>Events in Barcellona</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            egestas imperdiet elit ac tempor. Phasellus nec dolor porttitor,
-            bibendum lorem nec, scelerisque dui.
-          </p>
-        </a>
+        {data.map((ev) => (
+          <Link key={ev.id} href={`/events/${ev.id}`}>
+            <Image width={300} height={300} alt={ev.title} src={ev.image} />
+            <h2>{ev.title}</h2>
+            <p>{ev.description}</p>
+          </Link>
+        ))}
       </main>
       <footer>
         <p> 2022 Time to code - A project Next.js</p>
